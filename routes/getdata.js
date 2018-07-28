@@ -2,14 +2,20 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/',(req,res)=>{
-    const number = req.query.number;
+    let number = req.query.number;
     const id = req.params.id;
-    // console.log("Root in", number,id);
+    // console.log("Root in", number,id,numbertotal);
 
+    const templateData = {
+        number:req.query.number , 
+        total:[number-(-1)]*number/2
+    };
+
+    // console.log(templateData.total);
     if(number === 'NaN'){
-        res.redirect('/error');
+        res.send('Wrong Parameter');
     }else if( number%1 === 0 && number>0 ){
-        return res.render('getdata',{number:req.query.number});
+        return res.send(templateData);
     }else{
         res.redirect(`/getData?number=${Math.abs(parseInt(number))}`);
     };
@@ -24,7 +30,6 @@ router.get('/:id',(req,res)=>{
     if(!number){
         return res.redirect(`/getData?number=${id}`);
     };
-    
     
     res.render('getdata');
 

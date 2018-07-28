@@ -12,11 +12,11 @@ $(document).ready(function() {
        var number = $calculation.val();
 
        var url = `/getData?number=${number}`;
-    
+       
        function calculationAnswer(data) {
 
         if( number%1 === 0 && number>0 ){
-            $('#result').html(`Ok, it's ${[number-(-1)]*number/2}`);
+            $('#result').html(`Ok, it's ${data.total}`);
         }else{
             alert('請輸入正整數');
         };
@@ -24,7 +24,7 @@ $(document).ready(function() {
          $calculation.prop("disabled",false)
          $calculationButton.attr("disabled",false).val('YES');
        }
-       $.get(url, calculationAnswer);
+       $.getJSON(url, calculationAnswer);
    
     }); // end click
    
